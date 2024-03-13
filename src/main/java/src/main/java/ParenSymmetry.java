@@ -1,22 +1,42 @@
 package src.main.java;
 
+import java.io.*;
+import java.util.Scanner;
+
 public class ParenSymmetry {
 
 
     private Boolean isBalanced(String s) {
-        // implement this method
-        return null;
+        int parenthesis = 0;
+
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+
+            if (ch == '(') {
+                parenthesis++;
+            } else if (ch == ')') {
+                parenthesis--;
+            }
+
+            if (parenthesis < 0) {
+                return false;
+            }
+        }
+        return parenthesis == 0;
     }
 
     private void checkFile(String filename) {
-        // open file named filename
-
-        // for each line in the file
-            // read the line
-            // print whether or not the line's parenthesis are balanced
-
-        // CLOSE the file
+        try (BufferedReader file = new BufferedReader(new FileReader(filename))) {
+            String line;
+            while ((line = file.readLine()) != null) {
+                Boolean balanced = isBalanced(line);
+                System.out.println(balanced);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
 
     public static void main(String[] args) {
         ParenSymmetry ps = new ParenSymmetry();
@@ -52,3 +72,4 @@ public class ParenSymmetry {
         }
     }
 }
+
